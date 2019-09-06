@@ -25,6 +25,7 @@ interface ApiInterface {
 
     class Factory {
         companion object {
+            var pokedexList = mutableListOf<PokeForms>()
             val BASE_URL = "https://pokeapi.co/api/v2/"
             val gson = Gson()
 

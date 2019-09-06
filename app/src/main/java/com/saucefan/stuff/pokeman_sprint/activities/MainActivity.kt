@@ -2,11 +2,20 @@ package com.saucefan.stuff.pokeman_sprint.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.FrameLayout
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
+import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_layout.view.*
 import kotlinx.android.synthetic.main.testo.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +49,6 @@ import retrofit2.Response
 *
 *
 *
-*
 * */
 
 
@@ -61,11 +69,14 @@ class MainActivity : AppCompatActivity() {
 
  var pokedexRetrofit =  ApiInterface.Factory.create() // make an instance just for pokedex calls
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+/*
+
+        val manager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        recycle_view.layoutManager = manager
+*/
 
 
         btn_submit.setOnClickListener {
@@ -82,21 +93,37 @@ class MainActivity : AppCompatActivity() {
                     response: Response<PokeForms>
                 ) {
                     val newPokedex: PokeForms? = response.body()
-                    tv.text = newPokedex.toString()
-                       // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
+                    if (newPokedex != null) {
+                        pokedexList.add(newPokedex)
+                    }
+
+
+                    val mainLayout = findViewById<FrameLayout>(R.id.frame_content)
+                    val viewTextView = getLayoutInflater().inflate(R.layout.list_layout, mainLayout, false )
+                    viewTextView.tv_poke_name.text = newPokedex?.id.toString()
+                    Glide.with(this@MainActivity)
+                        .load(newPokedex?.sprites?.front_default)
+                        .into(viewTextView.img_poke)
+                    mainLayout.addView(viewTextView)
+
+
+                    // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
                              //   " habitat: ${sprites.toString()}"
                     Toast.makeText(this@MainActivity, newPokedex?.sprites?.front_default.toString(), Toast.LENGTH_SHORT)
                         .show()
                 }
             })
-            layoutInflater.inflate(R.layout.testo, scrollview)
+
+        }
+
+
         }
 
 
 
 
     }
-}
+
 
 
 
