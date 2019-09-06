@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.activities.DetailActivity
+import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
+import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.list_layout.view.*
 
 
@@ -38,12 +40,15 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         Glide.with(holder.pokeIMG.context)
             .load(currentSelection.sprites.front_default)
             .into(holder.pokeIMG)
+        holder.btn.setOnClickListener{
+            pokedexList.remove(currentSelection)
+            notifyItemRemoved(position)
+        }
         holder.pokeIMG.setOnClickListener{
                 var intent_details:Intent = Intent(it.context, DetailActivity::class.java)
                 intent_details.putExtra("pokeID",currentSelection.id.toString() ?:"151")
                 intent_details.putExtra("pokeSpriteURL", currentSelection.sprites.front_default)
                 startActivity(it.context, intent_details, null)
-
         }
     }
 
@@ -51,6 +56,7 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val pokeName: TextView = view.tv_poke_name
         val pokeIMG: ImageView = view.img_poke
+        val btn = view.delete
 
 
         /*     fun bindModel(currentSelection: Items) {
