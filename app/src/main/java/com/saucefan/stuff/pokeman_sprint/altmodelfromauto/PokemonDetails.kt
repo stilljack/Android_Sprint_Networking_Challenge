@@ -3,7 +3,7 @@ package com.saucefan.stuff.pokeman_sprint.altmodelfromauto
 
 import com.google.gson.annotations.SerializedName
 
-data class Pokemon(
+data class PokemonDetails(
     @SerializedName("base_happiness")
     var baseHappiness: Int,
     @SerializedName("capture_rate")

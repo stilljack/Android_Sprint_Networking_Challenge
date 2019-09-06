@@ -1,16 +1,14 @@
 package com.saucefan.stuff.pokeman_sprint.networking
 
 import com.google.gson.Gson
+import com.saucefan.stuff.pokeman_sprint.altmodelfromauto.PokemonDetails
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
-import com.saucefan.stuff.pokeman_sprint.model.Pokemon
-import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
-import java.util.concurrent.TimeUnit
+
 
 interface ApiInterface {
     @GET("pokedex/{id}")
@@ -20,7 +18,7 @@ interface ApiInterface {
     fun getPokemonForm(@Path("name") name: String): Call<PokeForms>
 
   @GET("pokemon-species/{name}")
- fun getPokemonDetails(@Path("name") name: String): Call<Pokemon>
+ fun getPokemonDetails(@Path("name") name: String): Call<PokemonDetails>
 
 
     class Factory {

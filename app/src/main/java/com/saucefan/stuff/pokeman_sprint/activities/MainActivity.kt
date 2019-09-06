@@ -1,14 +1,10 @@
 package com.saucefan.stuff.pokeman_sprint.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.FrameLayout
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
@@ -16,7 +12,6 @@ import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_layout.view.*
-import kotlinx.android.synthetic.main.testo.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -45,8 +40,8 @@ import retrofit2.Response
 * 3. I'm thinking about this problem too hard
 * 4. so our current imperfect data class pokemon can capture a searched for pokemons name and at least some of its details successfully using
 *       getPokemonDetails("name") -- i want to get to mvp today before the cows come  home so we'll come back to altering the pokedex calls later
-*
-*
+* 5. out current search implementation correctly grabs a url for the image and sets it with glide, also grabs the ID successfully which is all we need for a details view.
+*6. so we are gonna make a detail activity which will take in the pokemon ID
 *
 *
 * */
@@ -99,12 +94,18 @@ class MainActivity : AppCompatActivity() {
 
 
                     val mainLayout = findViewById<FrameLayout>(R.id.frame_content)
-                    val viewTextView = getLayoutInflater().inflate(R.layout.list_layout, mainLayout, false )
-                    viewTextView.tv_poke_name.text = newPokedex?.id.toString()
+                    val view = getLayoutInflater().inflate(R.layout.list_layout, mainLayout, false )
+                    view.tv_poke_name.text = newPokedex?.id.toString()
                     Glide.with(this@MainActivity)
                         .load(newPokedex?.sprites?.front_default)
-                        .into(viewTextView.img_poke)
-                    mainLayout.addView(viewTextView)
+                        .into(view.img_poke)
+                    mainLayout.addView(view)
+                    view.setOnClickListener{
+                        var intent_details = Intent(this@MainActivity,DetailActivity::class.java)
+                        intent_details.putExtra("pokeID",newPokedex?.id.toString() ?:"151")
+                        intent_details.putExtra("pokeSpriteURL", newPokedex?.sprites?.front_default ?: "https://assets.carolus.raywenderlich.com/assets/artwork/getting-started-android@2x-2006205d82bd24a83b14c885d490a2f4008e7fc19b81d5db8046da010d57c833.png")
+                        startActivity(intent_details)
+                    }
 
 
                     // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
