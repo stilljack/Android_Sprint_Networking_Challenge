@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.list_layout.view.*
 
 
-class Adapter(val list: MutableList<PokeForms>) : RecyclerView.Adapter<Adapter.ViewHolder>() {
+class ReAdapter(val list: MutableList<PokeForms>) : RecyclerView.Adapter<ReAdapter.ViewHolder>() {
 
 
 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

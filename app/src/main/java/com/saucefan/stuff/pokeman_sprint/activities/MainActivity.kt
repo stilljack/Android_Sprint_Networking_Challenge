@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
+import com.saucefan.stuff.pokeman_sprint.recyclerview.ReAdapter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_layout.view.*
 import retrofit2.Call
@@ -72,6 +75,13 @@ class MainActivity : AppCompatActivity() {
         val manager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycle_view.layoutManager = manager
 */
+        recycle_view.setHasFixedSize(true)
+        val manager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val adapter = ReAdapter(pokedexList)
+        recycle_view.layoutManager = manager
+        recycle_view.adapter = adapter
+
+
 
 
         btn_submit.setOnClickListener {
@@ -106,12 +116,12 @@ class MainActivity : AppCompatActivity() {
                         intent_details.putExtra("pokeSpriteURL", newPokedex?.sprites?.front_default ?: "https://assets.carolus.raywenderlich.com/assets/artwork/getting-started-android@2x-2006205d82bd24a83b14c885d490a2f4008e7fc19b81d5db8046da010d57c833.png")
                         startActivity(intent_details)
                     }
-
+                    adapter.notifyDataSetChanged()
 
                     // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
                              //   " habitat: ${sprites.toString()}"
-                    Toast.makeText(this@MainActivity, newPokedex?.sprites?.front_default.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                   // Toast.makeText(this@MainActivity, newPokedex?.sprites?.front_default.toString(), Toast.LENGTH_SHORT)
+                       // .show()
                 }
             })
 
