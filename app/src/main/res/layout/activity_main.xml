@@ -25,13 +25,13 @@
            android:text="submit"
            />
 
-<ScrollView
+<FrameLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/scrollview"
     app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
     app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel"
-    app:layout_constraintTop_toBottomOf="@id/et_pokeentry"
+    app:layout_constraintTop_toBottomOf="@id/btn_submit"
     >
     <TextView
         android:layout_width="wrap_content"
@@ -40,6 +40,6 @@
         android:id="@+id/tv"
         app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
         app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel" />
-</ScrollView>
+</FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

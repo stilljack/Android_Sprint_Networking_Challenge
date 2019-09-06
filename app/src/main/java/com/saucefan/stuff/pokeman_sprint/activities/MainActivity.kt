@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
-import com.saucefan.stuff.pokeman_sprint.model.Pokedex
-import com.saucefan.stuff.pokeman_sprint.model.Pokemon
-import com.saucefan.stuff.pokeman_sprint.model.Sprites
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.testo.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -69,6 +67,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         btn_submit.setOnClickListener {
             pokedexRetrofit.getPokemonForm(et_pokeentry.text.toString()).enqueue(object : Callback<PokeForms> {
                 override fun onFailure(call: Call<PokeForms>, t: Throwable) {
@@ -90,6 +89,7 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
             })
+            layoutInflater.inflate(R.layout.testo, scrollview)
         }
 
 
