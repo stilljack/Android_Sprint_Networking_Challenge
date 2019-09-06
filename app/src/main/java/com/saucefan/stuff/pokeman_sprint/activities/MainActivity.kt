@@ -45,7 +45,7 @@ import retrofit2.Response
 *       getPokemonDetails("name") -- i want to get to mvp today before the cows come  home so we'll come back to altering the pokedex calls later
 * 5. out current search implementation correctly grabs a url for the image and sets it with glide, also grabs the ID successfully which is all we need for a details view.
 *6. so we are gonna make a detail activity which will take in the pokemon ID
-*
+* end. we got the recycler view and such pretty much for free.
 *
 * */
 
