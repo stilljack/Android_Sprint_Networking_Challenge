@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.saucefan.stuff.pokeman_sprint.R
+import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
 import com.saucefan.stuff.pokeman_sprint.model.Pokemon
+import com.saucefan.stuff.pokeman_sprint.model.Sprites
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
@@ -68,7 +70,41 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         btn_submit.setOnClickListener {
-            pokedexRetrofit.getPokemonDetails(et_pokeentry.text.toString()).enqueue(object : Callback<Pokemon> {
+            pokedexRetrofit.getPokemonForm(et_pokeentry.text.toString()).enqueue(object : Callback<PokeForms> {
+                override fun onFailure(call: Call<PokeForms>, t: Throwable) {
+                    t.printStackTrace()
+                    val response = "faliure; ${t.message}"
+                    Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
+
+                }
+
+                override fun onResponse(
+                    call: Call<PokeForms>,
+                    response: Response<PokeForms>
+                ) {
+                    val newPokedex: PokeForms? = response.body()
+                    tv.text = newPokedex.toString()
+                       // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
+                             //   " habitat: ${sprites.toString()}"
+                    Toast.makeText(this@MainActivity, newPokedex?.sprites?.front_default.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
+        }
+
+
+
+
+    }
+}
+
+
+
+/*
+
+working pokemon details object
+
+pokedexRetrofit.getPokemonDetails(et_pokeentry.text.toString()).enqueue(object : Callback<Pokemon> {
                 override fun onFailure(call: Call<Pokemon>, t: Throwable) {
                     t.printStackTrace()
                     val response = "faliure; ${t.message}"
@@ -88,10 +124,4 @@ class MainActivity : AppCompatActivity() {
                         .show()
                 }
             })
-        }
-
-
-
-
-    }
-}
+ */

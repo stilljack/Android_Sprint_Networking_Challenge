@@ -1,6 +1,7 @@
 package com.saucefan.stuff.pokeman_sprint.networking
 
 import com.google.gson.Gson
+import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
 import com.saucefan.stuff.pokeman_sprint.model.Pokemon
 import okhttp3.OkHttpClient
@@ -15,9 +16,11 @@ interface ApiInterface {
     @GET("pokedex/{id}")
     fun getPokedex(@Path("id") id:String): Call<Pokedex>
 
+    @GET("pokemon-form/{name}")
+    fun getPokemonForm(@Path("name") name: String): Call<PokeForms>
+
   @GET("pokemon-species/{name}")
  fun getPokemonDetails(@Path("name") name: String): Call<Pokemon>
-
 
 
     class Factory {
