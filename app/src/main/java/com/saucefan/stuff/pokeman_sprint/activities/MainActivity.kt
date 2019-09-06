@@ -101,22 +101,25 @@ class MainActivity : AppCompatActivity() {
                     if (newPokedex != null) {
                         pokedexList.add(newPokedex)
                     }
+                    adapter.notifyDataSetChanged()
 
-
-                    val mainLayout = findViewById<FrameLayout>(R.id.frame_content)
+                   /* val mainLayout = findViewById<FrameLayout>(R.id.frame_content)
                     val view = getLayoutInflater().inflate(R.layout.list_layout, mainLayout, false )
+                       mainLayout.addView(view)
+
                     view.tv_poke_name.text = newPokedex?.id.toString()
                     Glide.with(this@MainActivity)
                         .load(newPokedex?.sprites?.front_default)
                         .into(view.img_poke)
-                    mainLayout.addView(view)
+
+
                     view.setOnClickListener{
                         var intent_details = Intent(this@MainActivity,DetailActivity::class.java)
                         intent_details.putExtra("pokeID",newPokedex?.id.toString() ?:"151")
                         intent_details.putExtra("pokeSpriteURL", newPokedex?.sprites?.front_default ?: "https://assets.carolus.raywenderlich.com/assets/artwork/getting-started-android@2x-2006205d82bd24a83b14c885d490a2f4008e7fc19b81d5db8046da010d57c833.png")
                         startActivity(intent_details)
-                    }
-                    adapter.notifyDataSetChanged()
+                    }*/
+
 
                     // "name: ${newPokedex?.name.toString()} \n id: ${newPokedex?.id.toString()} \n" +
                              //   " habitat: ${sprites.toString()}"

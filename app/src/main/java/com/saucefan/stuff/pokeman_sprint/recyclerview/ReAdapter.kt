@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.list_layout.view.*
 
 
@@ -29,15 +30,20 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       //  holder.nameTv.text = list[position].name
-
         val currentSelection = list[position]
+        holder.pokeName.text=currentSelection.name
+        Glide.with(holder.pokeIMG.getContext())
+            .load(currentSelection.sprites.front_default)
+            .into(holder.pokeIMG)
+        holder.pokeIMG.setOnClickListener{
 
+        }
     }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val nameTv: TextView = view.tv_poke_name
-        val ratingTv: ImageView = view.img_poke
+        val pokeName: TextView = view.tv_poke_name
+        val pokeIMG: ImageView = view.img_poke
 
 
         /*     fun bindModel(currentSelection: Items) {
