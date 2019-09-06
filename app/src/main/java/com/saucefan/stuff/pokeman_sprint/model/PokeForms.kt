@@ -1,0 +1,29 @@
+package com.saucefan.stuff.pokeman_sprint.model
+
+data class PokeForms (
+    val formName: String,
+    val formNames: List<Any?>,
+    val formOrder: Long,
+    val id: Long,
+    val isBattleOnly: Boolean,
+    val isDefault: Boolean,
+    val isMega: Boolean,
+    val name: String,
+    val names: List<Any?>,
+    val order: Long,
+    val pokemon: PokemonClass,
+    val sprites: Sprites,
+    val versionGroup: PokemonClass
+)
+
+data class PokemonClass (
+    val name: String,
+    val url: String
+)
+
+data class Sprites (
+    val backDefault: String,
+    val backShiny: String,
+    val frontDefault: String,
+    val frontShiny: String
+)

@@ -67,23 +67,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        pokedexRetrofit.getPokemonDetails("bulbasaur").enqueue(object: Callback<Pokemon> {
-            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
-                t.printStackTrace()
-                val response = "faliure; ${t.message}"
-                Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
+        btn_submit.setOnClickListener {
+            pokedexRetrofit.getPokemonDetails(et_pokeentry.text.toString()).enqueue(object : Callback<Pokemon> {
+                override fun onFailure(call: Call<Pokemon>, t: Throwable) {
+                    t.printStackTrace()
+                    val response = "faliure; ${t.message}"
+                    Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
 
-            }
+                }
+
                 override fun onResponse(
                     call: Call<Pokemon>,
                     response: Response<Pokemon>
                 ) {
-                    val newPokedex:Pokemon? = response.body()
-                    tv.text = "name: ${newPokedex?.name.toString()} \n habitat: ${newPokedex?.id.toString()} \n" +
-                            " habitat: ${newPokedex?.id.toString()}"
-                    Toast.makeText(this@MainActivity, newPokedex?.id.toString(),Toast.LENGTH_SHORT).show()
+                    val newPokedex: Pokemon? = response.body()
+                    tv.text =
+                        "name: ${newPokedex?.name.toString()} \n habitat: ${newPokedex?.id.toString()} \n" +
+                                " habitat: ${newPokedex?.id.toString()}"
+                    Toast.makeText(this@MainActivity, newPokedex?.id.toString(), Toast.LENGTH_SHORT)
+                        .show()
                 }
             })
+        }
+
+
 
 
     }
