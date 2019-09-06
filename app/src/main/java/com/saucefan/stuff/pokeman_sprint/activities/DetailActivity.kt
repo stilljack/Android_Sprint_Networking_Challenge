@@ -30,8 +30,14 @@ class DetailActivity : AppCompatActivity(), Callback<PokemonDetails> {
         response: Response<PokemonDetails>
     ) {
         val detailedPokemon: PokemonDetails? = response.body()
-
-        tv1.text = "Pokdex number: ${detailedPokemon?.id.toString()}"
+        var text =""
+        for (i in 0 until detailedPokemon?.flavorTextEntries?.size!!.toInt()) {
+            if (detailedPokemon?.flavorTextEntries[i].language.name.toString() == "en")
+            {
+                text=detailedPokemon?.flavorTextEntries[i].flavorText
+                }
+        }
+        tv1.text = text //"Pokdex number: ${detailedPokemon?.flavorTextEntries.toString()}"
         tv2.text = "Name: ${detailedPokemon?.name.toString()}"
         tv3.text = "Capture Rate: ${detailedPokemon?.captureRate.toString()}"
 

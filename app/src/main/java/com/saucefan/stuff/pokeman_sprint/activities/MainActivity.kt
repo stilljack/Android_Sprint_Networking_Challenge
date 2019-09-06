@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -76,7 +77,7 @@ class MainActivity : AppCompatActivity() {
         recycle_view.layoutManager = manager
 */
         recycle_view.setHasFixedSize(true)
-        val manager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+        val manager = GridLayoutManager(this, 1)
         val adapter = ReAdapter(pokedexList)
         recycle_view.layoutManager = manager
         recycle_view.adapter = adapter
