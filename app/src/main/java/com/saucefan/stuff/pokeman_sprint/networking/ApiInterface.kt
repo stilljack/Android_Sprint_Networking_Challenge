@@ -2,6 +2,7 @@ package com.saucefan.stuff.pokeman_sprint.networking
 
 import com.google.gson.Gson
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
+import com.saucefan.stuff.pokeman_sprint.model.Pokemon
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -14,8 +15,9 @@ interface ApiInterface {
     @GET("pokedex/{id}")
     fun getPokedex(@Path("id") id:String): Call<Pokedex>
 
-  //  @GET("employees/{id}")
-  //  fun getEmployees(@Path("id") employeeId: String): Call<List<Employee>>
+  @GET("pokemon-species/{name}")
+ fun getPokemonDetails(@Path("name") name: String): Call<Pokemon>
+
 
 
     class Factory {
@@ -25,8 +27,9 @@ interface ApiInterface {
 
 
             fun create(): ApiInterface {
-                val gson = Gson()
-                val logger = HttpLoggingInterceptor()
+
+                        // we don't need this at the moment
+             /*   val logger = HttpLoggingInterceptor()
                 logger.level = HttpLoggingInterceptor.Level.BASIC
                 logger.level = HttpLoggingInterceptor.Level.BODY
                 val okHttpClient = OkHttpClient.Builder()
@@ -34,9 +37,9 @@ interface ApiInterface {
                     .retryOnConnectionFailure(false)
                     .readTimeout(10, TimeUnit.SECONDS)
                     .connectTimeout(15, TimeUnit.SECONDS)
-                    .build()
+                    .build()*/
                 val retrofit = Retrofit.Builder()
-                    .client(okHttpClient)
+               //     .client(okHttpClient)
                     .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create(gson)) //gson
                     .build()

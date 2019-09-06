@@ -1,6 +1,8 @@
 
 package com.saucefan.stuff.pokeman_sprint.model
-/*
+
+import com.google.gson.annotations.SerializedName
+
 data class Pokemon (
     val baseHappiness: Long,
     val captureRate: Long,
@@ -21,13 +23,14 @@ data class Pokemon (
     val id: Long,
     val isBaby: Boolean,
     val name: String,
-    val names: List<Name>,
+    val names: List<NameL>,
     val order: Long,
     val palParkEncounters: List<PalParkEncounter>,
     val pokedexNumbers: List<PokedexNumber>,
     val shape: NameUrlPair,
     val varieties: List<Variety>
 )
+
 
 data class NameUrlPair (
     val name: String,
@@ -49,7 +52,7 @@ data class Genus (
     val language: NameUrlPair
 )
 
-data class Name (
+data class NameL (
     val language: NameUrlPair,
     val name: String
 )
@@ -68,4 +71,4 @@ data class PokedexNumber (
 data class Variety (
     val isDefault: Boolean,
     val pokemon: NameUrlPair
-)*/
+)

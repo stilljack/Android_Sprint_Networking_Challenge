@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.widget.Toast
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
+import com.saucefan.stuff.pokeman_sprint.model.Pokemon
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
+import kotlinx.android.synthetic.main.activity_main.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,10 +32,10 @@ import retrofit2.Response
 *
 * 1. build data class for pokedex  -- used app.quicktype.io and "Kotlin Dataclass from JSON plugin" to compare alternate strategies for
 * quickly parsing json <-- I imagine we'll return to this soon
-*
 * 2. implement the pattern similar to m03 of creating an interface class with a companion object to handle getting the info from the api
-*
-*
+* 3. I'm thinking about this problem too hard
+* 4. so our current imperfect data class pokemon can capture a searched for pokemons name and at least some of its details successfully using
+*       getPokemonDetails("name") -- i want to get to mvp today before the cows come  home so we'll come back to altering the pokedex calls later
 *
 *
 *
@@ -64,18 +66,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        pokedexRetrofit.getPokedex("2").enqueue(object: Callback<Pokedex> {
-            override fun onFailure(call: Call<Pokedex>, t: Throwable) {
+
+        pokedexRetrofit.getPokemonDetails("bulbasaur").enqueue(object: Callback<Pokemon> {
+            override fun onFailure(call: Call<Pokemon>, t: Throwable) {
                 t.printStackTrace()
                 val response = "faliure; ${t.message}"
                 Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
 
             }
                 override fun onResponse(
-                    call: Call<Pokedex>,
-                    response: Response<Pokedex>
+                    call: Call<Pokemon>,
+                    response: Response<Pokemon>
                 ) {
-                    Toast.makeText(this@MainActivity, response.body().toString(),Toast.LENGTH_SHORT).show()
+                    val newPokedex:Pokemon? = response.body()
+                    tv.text = "name: ${newPokedex?.name.toString()} \n habitat: ${newPokedex?.id.toString()} \n" +
+                            " habitat: ${newPokedex?.id.toString()}"
+                    Toast.makeText(this@MainActivity, newPokedex?.id.toString(),Toast.LENGTH_SHORT).show()
                 }
             })
 
