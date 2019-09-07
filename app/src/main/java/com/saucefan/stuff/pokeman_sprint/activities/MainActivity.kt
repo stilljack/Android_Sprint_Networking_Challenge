@@ -17,6 +17,7 @@ import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
 import com.saucefan.stuff.pokeman_sprint.recyclerview.ReAdapter
+import com.saucefan.stuff.pokeman_sprint.recyclerview.ReAdapter.Companion.deleteList
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.list_layout.view.*
 import retrofit2.Call
@@ -165,6 +166,18 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
+        }
+
+
+
+
+        btn_delete.setOnClickListener{
+                pokedexList.removeAll(deleteList)
+            deleteList.removeAll(deleteList)
+            adapter.notifyDataSetChanged()
+
+
+            var i = 9
         }
 
 

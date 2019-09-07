@@ -8,6 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,7 +24,9 @@ import kotlin.random.Random
 
 
 class ReAdapter(val list: MutableList<PokeForms>) : RecyclerView.Adapter<ReAdapter.ViewHolder>() {
-
+companion object {
+    var deleteList = mutableListOf<PokeForms>()
+}
 
 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
     val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.grid_layout, parent, false)
@@ -52,6 +59,7 @@ fun kill(pokeform:PokeForms,position: Int) {
             .load(chooseRandomSprite())
             .into(holder.pokeIMG)
         holder.pokeIMG.setOnClickListener{
+
             var intent_details:Intent = Intent(it.context, DetailActivity::class.java)
             intent_details.putExtra("pokeID",currentSelection.id.toString() ?:"151")
             intent_details.putExtra("pokeSpriteURL", currentSelection.sprites.front_default)
@@ -59,9 +67,17 @@ fun kill(pokeform:PokeForms,position: Int) {
         }
 
         holder.pokeIMG.setOnLongClickListener{ it: View? ->
+           //     Toast.makeText(it!!.context,"just great",Toast.LENGTH_SHORT).show();
+             val selected = ContextCompat.getDrawable(it!!.context,R.drawable.ic_launcher_background)
+            val unselected =ContextCompat.getDrawable(it.context,R.drawable.ic_android_black_24dp)
+            if (deleteList.contains(currentSelection)) {
+                it.background= unselected
+                deleteList.remove(currentSelection)
 
-                pokedexList.remove(currentSelection)
-                notifyItemRemoved(position)
+            } else {
+                it.background = selected
+                deleteList.add(currentSelection)
+            }
             true
         }
 
@@ -81,7 +97,7 @@ fun kill(pokeform:PokeForms,position: Int) {
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+        var pokeParent: ConstraintLayout = view.llcardview
         val pokeIMG: ImageView = view.img_poke
 
      /* list layout
