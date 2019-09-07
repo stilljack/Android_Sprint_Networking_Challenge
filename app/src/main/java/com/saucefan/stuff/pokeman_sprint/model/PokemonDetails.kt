@@ -1,4 +1,4 @@
-package com.saucefan.stuff.pokeman_sprint.altmodelfromauto
+package com.saucefan.stuff.pokeman_sprint.model
 
 
 import com.google.gson.annotations.SerializedName

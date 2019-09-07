@@ -1,5 +1,9 @@
 package com.saucefan.stuff.pokeman_sprint.model
 
+
+
+//this one sucked and was from that website
+//i mean sucked is the worng word... kinda sucked
 data class PokeForms (
     val formName: String,
     val formNames: List<Any?>,

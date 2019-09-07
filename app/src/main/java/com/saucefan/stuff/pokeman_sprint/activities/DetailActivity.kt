@@ -3,16 +3,12 @@ package com.saucefan.stuff.pokeman_sprint.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.FrameLayout
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
-import com.saucefan.stuff.pokeman_sprint.altmodelfromauto.Pokemon
-import com.saucefan.stuff.pokeman_sprint.altmodelfromauto.PokemonDetails
-import com.saucefan.stuff.pokeman_sprint.model.PokeForms
+import com.saucefan.stuff.pokeman_sprint.model.PokemonDetails
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import kotlinx.android.synthetic.main.activity_detail.*
-import kotlinx.android.synthetic.main.list_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

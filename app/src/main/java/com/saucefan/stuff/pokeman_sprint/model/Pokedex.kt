@@ -1,6 +1,6 @@
 package com.saucefan.stuff.pokeman_sprint.model
 
-
+//also suck
 data class Pokedex (
     val descriptions: List<Description>,
     val id: Long,

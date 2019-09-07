@@ -1,7 +1,7 @@
 package com.saucefan.stuff.pokeman_sprint.networking
 
 import com.google.gson.Gson
-import com.saucefan.stuff.pokeman_sprint.altmodelfromauto.PokemonDetails
+import com.saucefan.stuff.pokeman_sprint.model.PokemonDetails
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
 import com.saucefan.stuff.pokeman_sprint.model.Pokedex
 import retrofit2.Call
