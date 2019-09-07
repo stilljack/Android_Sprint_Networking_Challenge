@@ -1,6 +1,8 @@
 package com.saucefan.stuff.pokeman_sprint.activities
 
 import android.content.Intent
+import android.graphics.drawable.GradientDrawable
+import android.icu.lang.UCharacter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.FrameLayout
@@ -8,6 +10,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
@@ -19,6 +22,7 @@ import kotlinx.android.synthetic.main.list_layout.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.random.Random
 
 
 /*
@@ -68,6 +72,9 @@ class MainActivity : AppCompatActivity() {
 
  var pokedexRetrofit =  ApiInterface.Factory.create() // make an instance just for pokedex calls
 
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -76,15 +83,44 @@ class MainActivity : AppCompatActivity() {
         val manager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         recycle_view.layoutManager = manager
 */
-        recycle_view.setHasFixedSize(true)
-        val manager = GridLayoutManager(this, 1)
+        //recycle_view.setHasFixedSize(true)
+        val manager = StaggeredGridLayoutManager(7, StaggeredGridLayoutManager.VERTICAL)
         val adapter = ReAdapter(pokedexList)
         recycle_view.layoutManager = manager
         recycle_view.adapter = adapter
 
 
+        fun makeArandomPokedex(number: Int) {
+
+            for (i in 1 until number) {
+
+                pokedexRetrofit.getPokemonForm(Random.nextInt(1, 951).toString())
+                    .enqueue(object : Callback<PokeForms> {
+                        override fun onFailure(call: Call<PokeForms>, t: Throwable) {
+                            t.printStackTrace()
+                            val response = "faliure; ${t.message}"
+                            Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
+
+                        }
+
+                        override fun onResponse(
+                            call: Call<PokeForms>,
+                            response: Response<PokeForms>
+                        ) {
+                            val newPokedex: PokeForms? = response.body()
+                            if (newPokedex != null) {
+                                pokedexList.add(newPokedex)
+                            }
 
 
+                        }
+
+                    })
+
+            }
+            adapter.notifyDataSetChanged()
+        }
+        makeArandomPokedex(70)
         btn_submit.setOnClickListener {
             pokedexRetrofit.getPokemonForm(et_pokeentry.text.toString()).enqueue(object : Callback<PokeForms> {
                 override fun onFailure(call: Call<PokeForms>, t: Throwable) {

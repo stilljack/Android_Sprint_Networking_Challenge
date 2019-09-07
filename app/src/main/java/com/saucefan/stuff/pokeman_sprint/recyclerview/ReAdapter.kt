@@ -15,13 +15,14 @@ import com.saucefan.stuff.pokeman_sprint.activities.DetailActivity
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
 import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.list_layout.view.*
+import kotlin.random.Random
 
 
 class ReAdapter(val list: MutableList<PokeForms>) : RecyclerView.Adapter<ReAdapter.ViewHolder>() {
 
 
 override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-    val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+    val viewGroup = LayoutInflater.from(parent.context).inflate(R.layout.grid_layout, parent, false)
     return ViewHolder(viewGroup)
 
 }
@@ -32,40 +33,64 @@ override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 /*   interface OnRecyclerInterfaceListener {
        fun onItemSelected(item:Items)
     }*/
-
+fun kill(pokeform:PokeForms,position: Int) {
+    pokedexList.removeAt(position)
+}
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
       //  holder.nameTv.text = list[position].name
         val currentSelection = list[position]
-        holder.pokeName.text=currentSelection.name
+        fun chooseRandomSprite() : String {
+            var that =""
+                  when (Random.nextInt(1,3)) {
+                      1-> that = currentSelection.sprites.front_default
+                      2-> that = currentSelection.sprites.front_shiny
+                     else -> that = currentSelection.sprites.front_default
+                 }
+            return that
+        }
         Glide.with(holder.pokeIMG.context)
-            .load(currentSelection.sprites.front_default)
+            .load(chooseRandomSprite())
             .into(holder.pokeIMG)
-        holder.btn.setOnClickListener{
+        holder.pokeIMG.setOnClickListener{
+            var intent_details:Intent = Intent(it.context, DetailActivity::class.java)
+            intent_details.putExtra("pokeID",currentSelection.id.toString() ?:"151")
+            intent_details.putExtra("pokeSpriteURL", currentSelection.sprites.front_default)
+            startActivity(it.context, intent_details, null)
+        }
+
+        holder.pokeIMG.setOnLongClickListener{ it: View? ->
+
+                pokedexList.remove(currentSelection)
+                notifyItemRemoved(position)
+            true
+        }
+
+
+
+
+  /*    for list layout
+
+    holder.pokeName.text=currentSelection.name
+         holder.btn.setOnClickListener{
             pokedexList.remove(currentSelection)
             notifyItemRemoved(position)
         }
-        holder.pokeIMG.setOnClickListener{
-                var intent_details:Intent = Intent(it.context, DetailActivity::class.java)
-                intent_details.putExtra("pokeID",currentSelection.id.toString() ?:"151")
-                intent_details.putExtra("pokeSpriteURL", currentSelection.sprites.front_default)
-                startActivity(it.context, intent_details, null)
-        }
+        */
+
     }
 
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val pokeName: TextView = view.tv_poke_name
+
         val pokeIMG: ImageView = view.img_poke
+
+     /* list layout
+
+       val pokeName: TextView = view.tv_poke_name
         val btn = view.delete
+*/
 
 
-        /*     fun bindModel(currentSelection: Items) {
-                 if (currentSelection.ordered) {
-                     parentView.setBackgroundColor(ContextCompat.getColor(parentView.context, R.color.bought))
-                 } else {
-                     parentView.setBackgroundColor(ContextCompat.getColor(parentView.context, R.color.unbought))
-                 }
-             }*/
     }
 
 
