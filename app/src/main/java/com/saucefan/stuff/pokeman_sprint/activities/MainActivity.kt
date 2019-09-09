@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.bumptech.glide.Glide
 import com.saucefan.stuff.pokeman_sprint.R
 import com.saucefan.stuff.pokeman_sprint.model.PokeForms
+import com.saucefan.stuff.pokeman_sprint.model.Pokedex
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface
 import com.saucefan.stuff.pokeman_sprint.networking.ApiInterface.Factory.Companion.pokedexList
 import com.saucefan.stuff.pokeman_sprint.recyclerview.ReAdapter
@@ -95,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
             for (i in 1 until number) {
 
-                pokedexRetrofit.getPokemonForm(Random.nextInt(1, 951).toString())
+                pokedexRetrofit.getPokemonForm(Random.nextInt(1, 950).toString())
                     .enqueue(object : Callback<PokeForms> {
                         override fun onFailure(call: Call<PokeForms>, t: Throwable) {
                             t.printStackTrace()
@@ -165,7 +166,26 @@ class MainActivity : AppCompatActivity() {
                        // .show()
                 }
             })
+            pokedexRetrofit.getPokedex(et_pokeentry.text.toString()).enqueue(object : Callback<Pokedex> {
+                override fun onFailure(call: Call<Pokedex>, t: Throwable) {
+                    t.printStackTrace()
+                    val response = "faliure; ${t.message}"
+                    Toast.makeText(this@MainActivity, response, Toast.LENGTH_SHORT).show()
 
+                }
+
+                override fun onResponse(
+                    call: Call<Pokedex>,
+                    response: Response<Pokedex>
+                ) {
+                    val newPokedex: Pokedex? = response.body()
+                 /*   tv.text =
+                        "name: ${newPokedex?.name.toString()} \n habitat: ${newPokedex?.id.toString()} \n" +
+                                " habitat: ${newPokedex?.id.toString()}"*/
+                    Toast.makeText(this@MainActivity, newPokedex?.id.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                }
+            })
         }
 
 

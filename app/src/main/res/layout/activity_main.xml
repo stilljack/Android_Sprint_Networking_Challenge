@@ -35,7 +35,7 @@
         />
 <ScrollView
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="600dp"
     android:id="@+id/frame_content"
     app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
     app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel"

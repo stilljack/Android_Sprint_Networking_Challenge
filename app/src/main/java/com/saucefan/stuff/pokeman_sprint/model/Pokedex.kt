@@ -1,33 +1,60 @@
 package com.saucefan.stuff.pokeman_sprint.model
 
-//also suck
-data class Pokedex (
-    val descriptions: List<Description>,
-    val id: Long,
-    val isMainSeries: Boolean,
-    val name: String,
-    val names: List<Name>,
-    val pokemonEntries: List<PokemonEntry>,
-    val region: Region,
-    val versionGroups: List<Region>
-)
 
-data class Description (
-    val description: String,
-    val language: Region
-)
+import com.google.gson.annotations.SerializedName
 
-data class Region (
-    val name: String,
-    val url: String
-)
+data class Pokedex(
+    var descriptions: List<Description>,
+    var id: Int,
+    @SerializedName("is_main_series")
+    var isMainSeries: Boolean,
+    var name: String,
+    var names: List<Name>,
+    @SerializedName("pokemon_entries")
+    var pokemonEntries: List<PokemonEntry>,
+    var region: Region,
+    @SerializedName("version_groups")
+    var versionGroups: List<VersionGroup>
+) {
+    data class Description(
+        var description: String,
+        var language: Language
+    ) {
+        data class Language(
+            var name: String,
+            var url: String
+        )
+    }
 
-data class Name (
-    val language: Region,
-    val name: String
-)
+    data class Name(
+        var language: Language,
+        var name: String
+    ) {
+        data class Language(
+            var name: String,
+            var url: String
+        )
+    }
 
-data class PokemonEntry (
-    val entryNumber: Long,
-    val pokemonSpecies: Region
-)
+    data class PokemonEntry(
+        @SerializedName("entry_number")
+        var entryNumber: Int,
+        @SerializedName("pokemon_species")
+        var pokemonSpecies: PokemonSpecies
+    ) {
+        data class PokemonSpecies(
+            var name: String,
+            var url: String
+        )
+    }
+
+    data class Region(
+        var name: String,
+        var url: String
+    )
+
+    data class VersionGroup(
+        var name: String,
+        var url: String
+    )
+}

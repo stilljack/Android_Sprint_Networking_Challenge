@@ -28,6 +28,7 @@ class DetailActivity : AppCompatActivity(), Callback<PokemonDetails> {
         val detailedPokemon: PokemonDetails? = response.body()
         var text =""
         for (i in 0 until detailedPokemon?.flavorTextEntries?.size!!.toInt()) {
+            // this boy done finds our englash languages so you aint readin no japanise
             if (detailedPokemon?.flavorTextEntries[i].language.name.toString() == "en")
             {
                 text=detailedPokemon?.flavorTextEntries[i].flavorText
