@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity"
+    android:id="@+id/cl_toplevel">
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="enter pokemon name here"
+        android:textSize="20dp"
+        android:id="@+id/et_pokeentry"
+        app:layout_constraintTop_toTopOf="@+id/cl_toplevel"
+        app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel"
+        />
+       <Button
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:id="@+id/btn_submit"
+           app:layout_constraintTop_toBottomOf="@id/et_pokeentry"
+           app:layout_constraintLeft_toLeftOf="@id/cl_toplevel"
+           android:textSize="12dp"
+           android:text="submit"
+           />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_delete"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
+        app:layout_constraintRight_toRightOf="@id/cl_toplevel"
+        android:textSize="12dp"
+        android:text="delete selected"
+        />
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="600dp"
+    android:id="@+id/frame_content"
+    app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
+    app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel"
+    app:layout_constraintTop_toBottomOf="@id/btn_submit"
+    >
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recycle_view"
+        android:background="#E1E1E1"
+        tools:listitem="@layout/grid_layout"
+        app:spanCount="5"/>
+  <!--  <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hello World!"
+        android:id="@+id/tv"
+        app:layout_constraintBottom_toBottomOf="@+id/cl_toplevel"
+        app:layout_constraintLeft_toLeftOf="@+id/cl_toplevel" />-->
+</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
